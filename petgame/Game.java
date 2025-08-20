@@ -1,22 +1,18 @@
-//TODO: Encapsulate hunger
-//TODO: Encapsulate happiness
-//TODO: Decouple the business class from the console (Use a listener via Interface)
+//TODO: Create a PetType enum
 //TODO: Decouple the dying via a custom exception.
-//TODO: Create specialized pets (cats, dogs)
+//TODO: Decouple the business class from the console (Use a listener via Interface)
 package petgame;
 
 import java.util.Scanner;
 
 public class Game {
     public static void main(String[] args) throws Exception{
-        System.out.println("Welcome to Tamagotchi");
-
+        Pet pet;
         Scanner scanner = new Scanner(System.in);
         System.out.print("What would you like to name your pet? ");
         String name = scanner.nextLine();
         System.out.print("What kind of pet? ");
         String petType = scanner.nextLine();
-        Pet pet;
         switch (petType) {
             case "cat":
                 pet = Cat.withName(name);
@@ -57,7 +53,7 @@ public class Game {
                     System.err.printf("'%s' isn't a valid option. Please try again.\n", input);
             }
             System.out.printf("Pet status: cleanliness: %d, happiness: %d, hunger: %d\n\n", pet.getCleanliness(),
-                    pet.happiness, pet.hunger);
+                    pet.getHappiness(), pet.hunger);
         }
 
         scanner.close();

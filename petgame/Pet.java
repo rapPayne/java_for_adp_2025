@@ -6,7 +6,7 @@ import java.util.TimerTask;
 public class Pet {
     protected int hunger=5;
     protected int cleanliness=5;
-    public int happiness=5;
+    private int happiness=5;
     private String name;
     private boolean isAlive;
     // #region Timer logic
@@ -15,6 +15,7 @@ public class Pet {
         public void run() {
             hunger++;
             cleanliness = cleanliness - 1;
+            happiness = (hunger + cleanliness)/2;
             checkHealth();
             System.out.printf("%s is getting hungrier. (%d).\n", name, hunger);
         }
@@ -34,6 +35,10 @@ public class Pet {
     }
     // #endregion
 
+    //#region Accessors
+    public int getHappiness() {
+        return happiness;
+    }
     // public void setName(String value) {
     //     name = value;
     // }
@@ -43,7 +48,9 @@ public class Pet {
     public boolean getIsAlive() {
         return isAlive;
     }
-
+    int getCleanliness() {
+        return cleanliness;
+    }
     public int getHunger() {
         return hunger;
     }
@@ -53,6 +60,7 @@ public class Pet {
     //     }
     //     hunger = value;
     // }
+    //#endregion
 
     public void wash() {
         cleanliness = 10;
@@ -64,17 +72,12 @@ public class Pet {
         hunger-=1;
         checkHealth();
     }
-
     public void play() {
         happiness++;
         cleanliness--;
         hunger++;
         checkHealth();
     }
-    int getCleanliness() {
-        return cleanliness;
-    }
-
     private void checkHealth() {
         if (hunger > 10) {
             System.out.printf("%s has starved. 💀\n\n", name);
