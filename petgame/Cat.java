@@ -14,7 +14,7 @@ public class Cat extends Pet {
     }
 
     @Override
-    public void play() {
+    public void play() throws DeadPetException {
         super.play();
         System.out.println("Cat is kinda ignoring you.");
     }

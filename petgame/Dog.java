@@ -10,7 +10,7 @@ public class Dog extends Pet {
         super(name);
     }
     @Override
-    public void play() {
+    public void play() throws DeadPetException{
         super.play();
         System.out.println("Dog is fetching teh stick.");
     }
