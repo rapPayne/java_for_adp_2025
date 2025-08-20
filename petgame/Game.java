@@ -7,6 +7,12 @@ import java.util.Scanner;
 public class Game {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
+                    Pet.PetListener listener = new Pet.PetListener() {
+                @Override
+                public void emit(String message) {System.out.println(message);}
+            };
+            // pet.setListener(listener);
+
         try {
             Pet pet;
             System.out.print("What would you like to name your pet? ");
@@ -15,15 +21,16 @@ public class Game {
             String petType = scanner.nextLine();
             switch (petType) {
                 case "cat":
-                    pet = Cat.withName(name);
+                    pet = Cat.withName(name, listener);
                     break;
                 case "dog":
-                    pet = Dog.withName(name);
+                    pet = Dog.withName(name, listener);
                     break;
                 default:
                     System.err.println("That's not a valid pet type");
                     throw new BadPetTypeException("Bad pet type");
             }
+
 
             boolean running = true;
             while (running) {

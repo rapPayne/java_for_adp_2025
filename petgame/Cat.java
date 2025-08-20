@@ -1,21 +1,21 @@
 package petgame;
 
 public class Cat extends Pet {
-    public static Cat withName(String name) {
-        return (name.isEmpty() || name == null) ? new Cat() : new Cat(name);
+    public static Cat withName(String name, PetListener listener) {
+        return (name.isEmpty() || name == null) ? new Cat(listener) : new Cat(name, listener);
     }
 
-    public Cat() {
-        super("Dave");
+    public Cat(PetListener listener) {
+        super("Dave", listener);
     }
 
-    public Cat(String name) {
-        super(name);
+    public Cat(String name, PetListener listener) {
+        super(name, listener);
     }
 
     @Override
     public void play() throws DeadPetException {
         super.play();
-        System.out.println("Cat is kinda ignoring you.");
+        listener.emit(String.format("Cat is kinda ignoring you."));
     }
 }

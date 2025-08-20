@@ -1,17 +1,17 @@
 package petgame;
 
 public class Dog extends Pet {
-    public static Dog withName(String name) { return (name.isEmpty() || name == null) ? new Dog() : new Dog(name);}
-    public Dog() {
-        super("Dave");
+    public static Dog withName(String name, PetListener listener) { return (name.isEmpty() || name == null) ? new Dog(listener) : new Dog(name, listener);}
+    public Dog(PetListener listener) {
+        super("Dave", listener);
     }
 
-    public Dog(String name) {
-        super(name);
+    public Dog(String name, PetListener listener) {
+        super(name, listener);
     }
     @Override
     public void play() throws DeadPetException{
         super.play();
-        System.out.println("Dog is fetching teh stick.");
+        listener.emit(String.format("Dog is fetching teh stick."));
     }
 }

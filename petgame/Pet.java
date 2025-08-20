@@ -4,11 +4,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Pet {
+    public interface PetListener {
+        void emit(String message);
+    }
+
     protected int hunger = 5;
     protected int cleanliness = 5;
     private int happiness = 5;
     private String name;
+    protected PetListener listener;
 
+    public void setListener(PetListener listener) {
+        this.listener = listener;
+    }
     // #region Timer logic
     private Timer timer = new Timer();
     private TimerTask hungerTask = new TimerTask() {
@@ -19,23 +27,25 @@ public class Pet {
             try {
                 checkHealth();
             } catch (DeadPetException ex) {
-                System.out.printf("%s has died. Sorry!", name);
+                listener.emit(String.format("%s has died. Sorry!", name));
                 this.cancel();
+                throw new RuntimeException();
             }
-            System.out.printf("%s is getting hungrier. (%d).\n", name, hunger);
+            listener.emit(String.format("%s is getting hungrier. (%d).\n", name, hunger));
         }
     };
     // #endregion
 
     // #region Constructors
-    public Pet(String name) {
+    public Pet(String name, PetListener listener) {
         this.name = name;
-        System.out.println("Your pet " + name + " has been born.");
+        this.listener = listener;
+        listener.emit(String.format("Your pet " + name + " has been born."));
         timer.scheduleAtFixedRate(hungerTask, 15000, 15000);
     }
 
-    public Pet() {
-        this("Fido");
+    public Pet(PetListener listener) {
+        this("Fido", listener);
     }
     // #endregion
 
